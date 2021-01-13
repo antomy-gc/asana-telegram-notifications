@@ -46,7 +46,7 @@ try:
                 events = list()
                 time.sleep(pollTimeout)
         except Exception:
-            telegram.sendPlainText('Exception occurred. Trying to recover')
+            telegram.sendPlainText('Exception occurred\. Trying to recover')
             syncToken = obtainSyncToken()
 except Exception:
-    telegram.sendPlainText('Bot crashed. Please, restart')
+    telegram.sendPlainText('Bot crashed\. Please, restart')
