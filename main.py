@@ -45,7 +45,7 @@ try:
             if not response['has_more']:
                 telegram.sendUpdates(list(combineByTask(events).values()))
                 events = list()
-                time.sleep(30)
+                time.sleep(pollTimeout)
         except Exception:
             telegram.sendPlainText('Exception occurred. Trying to recover')
             syncToken = obtainSyncToken()
