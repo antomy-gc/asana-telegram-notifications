@@ -33,7 +33,7 @@ def obtainSyncToken():
     print('Started polling')
 
 
-# Main loop
+
 events = list()
 syncToken = obtainSyncToken()
 try:
