@@ -3,6 +3,10 @@ import time
 import telegram
 import config
 
+fields = {'user', 'type', 'action', 'resource'}
+client = asana.Client.access_token(config.asanaToken)
+pollTimeout = 30
+
 
 def filterEmpty(updates):
     result = list()
@@ -21,23 +25,29 @@ def combineByTask(updates):
     return result
 
 
-fields = {'user', 'type', 'action', 'resource'}
-client = asana.Client.access_token(config.asanaToken)
-sync_token = ''
+def obtainSyncToken():
+    try:
+        client.events.get({'resource': config.asanaProject}, opt_pretty=True)
+    except Exception as e:
+        return e.sync
+    print('Started polling')
 
-try:
-    client.events.get({'resource': config.asanaProject}, opt_pretty=True)
-except Exception as e:
-    sync_token = e.sync
-print('Started polling')
 
+# Main loop
 events = list()
-while True:
-    response = client.events.get({'resource': config.asanaProject, 'sync': sync_token}, opt_pretty=True,
-                                 iterator_type=None)
-    sync_token = response['sync']
-    events = events + filterEmpty(response['data'])
-    if not response['has_more']:
-        telegram.sendUpdates(list(combineByTask(events).values()))
-        events = list()
-        time.sleep(5)
+syncToken = obtainSyncToken()
+try:
+    while True:
+        try:
+            response = client.events.get({'resource': config.asanaProject, 'sync': syncToken}, opt_pretty=True, iterator_type=None)
+            syncToken = response['sync']
+            events = events + filterEmpty(response['data'])
+            if not response['has_more']:
+                telegram.sendUpdates(list(combineByTask(events).values()))
+                events = list()
+                time.sleep(30)
+        except Exception:
+            telegram.sendPlainText('Exception occurred. Trying to recover')
+            syncToken = obtainSyncToken()
+except Exception:
+    telegram.sendPlainText('Bot crashed. Please, restart')
