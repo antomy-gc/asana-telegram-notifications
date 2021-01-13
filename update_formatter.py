@@ -74,7 +74,7 @@ def footer(lastUpdate):
 
 def formatTask(taskUpdates):
     result = 'Проект: `{}`\n'.format(config.asanaProjectName)
-    result += header(taskUpdates[1])
+    result += header(taskUpdates[0])
     result += 'Все события:\n'
     for update in taskUpdates:
         result += actions[update['action']](update)
