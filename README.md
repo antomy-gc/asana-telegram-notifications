@@ -15,4 +15,4 @@ app.asana.com/0/`[projectID]`/list или используя [API explorer](http
 
 
 Важно: скрипт отправляет уведомления в телеграм с использованием MarkdownV2, при этом экранируются только символы `\_ \- \.`\. Если из Asana вы ожидаете получить 
-один из спецсимволов Markdown, добавьте их экранирование в функцию escapeChars для названий обьектов Asana и в replaceChars для тегов задач, в task_formatter.py
+один из спецсимволов Markdown, добавьте их экранирование в функцию `escapeChars` для названий обьектов Asana и в `replaceChars` для тегов задач в файле `task_formatter.py`
