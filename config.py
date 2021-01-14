@@ -13,7 +13,8 @@ def createConfFile():
         'asanaProject': '',
         'asanaProjectName': '',
         'tgToken': '',
-        'tgChatId': ''
+        'tgChatId': '',
+        'pollTimeout': ''
     }
     updateConfFile(data)
 
@@ -41,15 +42,22 @@ def setupTgChat(conf):
     updateConfFile(conf)
 
 
+def setupPollTimeout(conf):
+    conf['pollTimeout'] = input('Введите таймаут в секундах между запросами обновления:')
+    updateConfFile(conf)
+
+
 if not os.path.exists("conf.json"): createConfFile()
 currentConfig = json.load(open('conf.json'))
 if currentConfig['tgToken'] == '': setupTgKey(currentConfig)
 if currentConfig['tgChatId'] == '': setupTgChat(currentConfig)
 if currentConfig['asanaToken'] == '': setupAsanaToken(currentConfig)
 if currentConfig['asanaProject'] == '' or currentConfig['asanaProjectName'] == '': setupAsanaProject(currentConfig)
+if currentConfig['pollTimeout'] == '' or currentConfig['pollTimeout'] < 1: setupPollTimeout(currentConfig)
 
 tgToken = currentConfig['tgToken']
 tgChatId = currentConfig['tgChatId']
 asanaToken = currentConfig['asanaToken']
 asanaProject = currentConfig['asanaProject']
 asanaProjectName = currentConfig['asanaProjectName']
+pollTimeout = currentConfig['pollTimeout']

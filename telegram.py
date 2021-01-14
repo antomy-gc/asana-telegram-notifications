@@ -1,7 +1,7 @@
 import telebot
 import time
 import config
-import update_formatter
+import task_formatter
 
 bot = telebot.TeleBot(config.tgToken)
 
@@ -17,4 +17,4 @@ def sendPlainText(text):
 
 def sendUpdates(updates):
     for task in updates:
-        sendPlainText(update_formatter.formatTask(task))
+        sendPlainText(task_formatter.formatTask(task))
