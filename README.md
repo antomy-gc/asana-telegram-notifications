@@ -5,4 +5,3 @@
 
 Запустите скрипт start.sh и следуйте инструкциям. ID проекта можно получить из адресной строки браузера при просмотре списка задач:
 app.asana.com/0/`[projectID]`/list или используя [API explorer](https://developers.asana.com/explorer)
-
