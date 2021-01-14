@@ -1,4 +1,4 @@
-# asana-telegram-notifications
+# Asana telegram notifications bot
 
 Для установки создайте бота в телеграм в [@BotFather](https://t.me/BotFather) и сохраните токен для доступа.
 
